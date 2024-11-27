@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../heroku-cli-bin-aur"
+		}
+	],
+	"settings": {}
+}
