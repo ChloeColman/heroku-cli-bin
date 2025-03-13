@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../heroku-cli-bin-aur"
+		},
+		{
+			"path": "../heroku-cli"
 		}
 	],
 	"settings": {}
