@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-VERSION=10.10.1
+VERSION=10.11.0
 RELEASE=1
-COMMIT_ID="4856ed8dd4d632540e3d707204cdfe9c8f9c8280"
+COMMIT_ID="0580c4382727bee72879f74b8e5cf8b2d0772a8b"
 SRC_DIR=$(dirname "$0")
 SRC_DIR=$(cd $SRC_DIR; pwd)
 SRC_DIR=$(cd "$SRC_DIR/../"; pwd)
