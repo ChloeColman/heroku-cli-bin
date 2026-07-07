@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-VERSION=10.17.0
+VERSION=11.8.0
 RELEASE=1
-COMMIT_ID="8f921d24ac3b66f059a730ed784acc9d930b7efb"
+COMMIT_ID="f6c534288e74ffe5de0f491126f547dfd2132758"
 SRC_DIR=$(dirname "$0")
 SRC_DIR=$(cd $SRC_DIR; pwd)
 SRC_DIR=$(cd "$SRC_DIR/../"; pwd)
@@ -29,19 +29,16 @@ pushd "$SRC_DIR"
     pushd cli-source
       git fetch origin "$COMMIT_ID"
       git switch --detach "$COMMIT_ID"
-      echo "YARN INSTALL"
-      yarn
 
-      pushd packages/cli
+      echo "NPM INSTALL"
+      npm ci
 
-        echo "REMOVE UPDATE"
-        sed -i "/oclif\/plugin-update/d" ./package.json
+      echo "REMOVE UPDATE"
+      sed -i "/oclif\/plugin-update/d" ./package.json
 
-        echo "CLI YARN INSTALL"
-        yarn
-        yarn pack --filename "heroku-v$VERSION-linux-x64.tar.xz"
-        mv "heroku-v$VERSION-linux-x64.tar.xz" ../..
-      popd
+      echo "NPM PACK"
+      npm pack
+      mv "heroku-$VERSION.tgz" "heroku-v$VERSION-linux-x64.tar.xz"
 
       RELEASE_DIR="heroku-cli-v$VERSION-$RELEASE"
 
@@ -53,9 +50,10 @@ pushd "$SRC_DIR"
       echo "PACKAGE RELEASE"
       pushd "$RELEASE_DIR"
         mv package heroku
+        ln -sf run.js heroku/bin/run
         pushd heroku
-          touch yarn.lock
-          yarn workspaces focus --production
+          echo "PROD INSTALL"
+          npm install --omit=dev
         popd
         tar -cJvf "$SRC_DIR/heroku-cli-bin-v$VERSION-$RELEASE.tar.xz" heroku
       popd
